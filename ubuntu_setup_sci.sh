@@ -25,15 +25,7 @@ sudo apt-get -y install libapparmor1
 sudo apt-get -y install psmisc
 
 # Install R and R-studio
-wget http://cran.us.r-project.org/src/base/R-3/R-3.0.1.tar.gz
-tar -xf R-3.0.1.tar.gz
-cd R-3.0.1.tar.gz
-
-./configure --with-blas="-lf77blas -latlas"
-make --enable-R-shlib --with-tcltk
-make check
-mkdir /usr/local/lib/R/lib
-make install 
+sudo apt-get -y r-base-dev
 
 wget http://download2.rstudio.org/rstudio-server-0.97.551-amd64.deb
 sudo gdebi -y rstudio-server-0.97.551-amd64.deb
