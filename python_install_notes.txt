@@ -1,0 +1,75 @@
+
+
+
+
+
+For OSX Mountain Lion from https://github.com/edx/discern/wiki/Setup-Guide#wiki-mac.
+
+Mac OS X
+Preparation
+
+1.Setup Xcode with Command Line Tools
+
+Install XCode from the Apple App Store Version 4.5 or later
+
+In XCode, Go to Preferences -> Download ->"Command Line Tools" -> Click Install button
+
+2.Install Homebrew:
+
+/usr/bin/ruby -e "$(curl -fsSkL http://raw.github.com/mxcl/homebrew/go)"
+3.Install Python
+
+brew install python --universal --framework
+4.Install pip
+
+easy_install pip
+5.Install virtualenv
+
+pip install virtualenv
+6.Getting started with Virtualenv
+
+cd to/where/you/want/env/to/be
+
+virtualenv --no-site-packages discern-venv
+
+source bin/activate
+Now you should see (discern-venv) on your command line.
+
+Installation
+
+Installing numpy and **scipy* independently will avoid unnecessary troubles.
+
+pip install numpy==1.6.2
+pip install scipy==0.11.0
+If you bump into following error when installing scipy
+
+error: library dfftpack has Fortran sources but no Fortran compiler found
+On Lion, you have to run
+
+brew edit gfortran
+Change
+
+if MacOS.xcode_version >= '4.2' and MACOS_VERSION == 10.7
+    ohai "Installing gfortran 4.2.4 for XCode 4.2 (build 5666)"
+to:
+
+if MacOS.xcode_version >= '4.2' and MACOS_VERSION >= 10.7
+    ohai "Installing gfortran 4.2.4 for XCode 4.2 (build 5666) or higher"
+On Mountain Lion, you don't have to do above steps. Just run the following command:
+
+brew install gfortran
+Then you could just cd to the discern repo and run following command:
+pip install -r requirements.txt
+If you get this error when trying to install scipy:
+
+numpy.distutils.npy_pkg_config.PkgNotFound: Could not find file(s) ['/usr/local/lib/python2.7/site-packages/numpy/core/lib/npy-pkg-config/npymath.ini']
+Then you need to install numpy not using pip, due to a bug documented here.
+
+Run the following commands after you've activated your virtualenv::
+
+$ git clone git@github.com:numpy/numpy.git
+$ git checkout maintenance/1.6.x
+$ python setup.py install
+The last line of output should look something like this:
+
+copying build/temp.macosx-10.8-x86_64-2.7/libnpymath.a -> /usr/local/lib/python2.7/site-packages/numpy/core/lib

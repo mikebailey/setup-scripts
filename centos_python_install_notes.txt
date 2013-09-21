@@ -1,0 +1,84 @@
+#Install hdf5
+mkdir -p /data/users/mcbailey/src/
+cd /data/users/mcbailey/src/
+sudo wget http://www.hdfgroup.org/ftp/HDF5/current/bin/RPMS/x86_64/hdf5-1.8.9-1.el5.x86_64.rpm
+sudo rpm -i hdf5-1.8.9-1.el5.x86_64.rpm
+
+#Install gdal
+sudo wget http://download.osgeo.org/gdal/gdal-1.9.2.tar.gz
+cd ./gdal-1.9.2
+sudo ./configure
+sudo make
+sudo make install
+
+#one can also try sudo yum install gdal.x86_64
+
+#Install blas libraries and other prereqs
+cd data/users/mcbailey/src/
+sudo yum install suitesparse-devel.x86_64 atlas-devel.x86_64 blas-devel.x86_64 fftw-devel hdf5-devel.x86_64 numpy scipy 
+
+# Are these needed? sudo yum install tkinter gtk2-devel pygtk2-devel fb-pytz fb-python-dateutil
+# fb-pycairo-devel fb-pygobject2-devel docbook-style-xsl
+# fb-python-matplotlib-tk
+
+
+#install python2.7
+cd /data/users/mcbailey/src/
+sudo wget http://www.python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2
+sudo tar xf Python-2.7.3.tar.bz2
+sudo chmod 777 Python-2.7.3/
+cd ./Python-2.7.3
+sudo ./configure --prefix=/usr/local
+sudo make && sudo make altinstall
+
+#install distribute
+cd /data/users/mcbailey/src/
+sudo wget http://pypi.python.org/packages/source/d/distribute/distribute-0.6.30.tar.gz
+sudo tar xf distribute-0.6.30.tar.gz
+cd ./distribute-0.6.30
+sudo python2.7 setup.py install
+
+#install pip and virtualenv
+cd /data/users/mcbailey/src/
+sudo easy_install-2.7 pip
+sudo pip-2.7 install virtualenv
+
+# Note make sure that virtualenv is not installed on the default python or new virtualenvs will point to that
+
+
+# Make data virtualenv
+cd /data/users/mcbailey/
+sudo mkdir virtualenvs
+cd ./virtualenvs
+
+sudo virtualenv --python=/data/users/mcbailey/bin/python2.7 DATAENV --distribute
+
+source ./DATAENV/bin/activate
+
+#Install pysal
+cd /data/users/mcbailey/src/
+sudo wget http://pysal.googlecode.com/files/pysal-1.4.0.tar.gz
+sudo tar xf pysal-1.4.0.tar.gz
+cd ./pysal-1.4.0
+sudo python setup.py install
+
+#Install modules
+cd /data/users/mcbailey/src/
+
+sudo pip install numpy
+sudo pip install scipy
+sudo pip install matplotlib
+sudo pip install pandas
+sudo pip install numexpr
+sudo pip install statsmodels
+#statsmodels might require you to remove a pandas dependency from setup.py
+sudo pip install reportlab
+
+sudo pip install -r ~/downloads/requirements.txt
+# chaco is not working sudo pip install chaco
+
+# chaco is not working, but do this later sudo yum groupinstall "X Software Development" --exclude=libdrm-devel
+
+
+
+

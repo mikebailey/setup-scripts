@@ -1,0 +1,51 @@
+Install pip: http://www.pip-installer.org/en/latest/
+Install virtualenv: http://pypi.python.org/pypi/virtualenv
+
+To create a new virtualenvironment, type 'virtualenv NAME'. These can be put in ~/.virtuenvs so they are all in the same place. To activate a virtualenvironment, type 'source bin/activite'. One can put a line in .bashrc for all the enironments: "alias mathenv='source ~/.virtualenvs/MATHENV/bin/activate'". 
+
+For ipython, one must do an 'easy_install readline'.
+
+Use yolk for package management 'yolk -l' once installed. 
+
+To install hdf5, follow the instructions here: http://cdx.jpl.nasa.gov/documents/technical-design/accessing-hdf-data-from-python-on-mac-os-x
+
+Use the following configuration options:
+
+CFLAGS=-O0 ./configure \
+    --prefix=/Library/Frameworks/Python.framework/Versions/Current \
+    --enable-shared \
+    --enable-production \
+    --with-szlib=/Library/Frameworks/Python.framework/Versions/Current \
+    CPPFLAGS=-I/Library/Frameworks/Python.framework/Versions/Current/include \
+    LDFLAGS=-L/Library/Frameworks/Python.framework/Versions/Current/lib
+
+You only need the CFLAGS=-O0 for lion. 
+
+After installation, untar a version of h5py and do:
+
+python \
+    setup.py \
+    build \
+    --api=18 \
+    --hdf5=/Library/Frameworks/Python.framework/Versions/Current
+
+sudo python setup.py install
+
+gdal: one must install libgdal, 'brew install gdal', before installing python module
+
+To get matplotlib working correctly with ipython, (`from matplotlib import ft2font`), you need to link the X11 freetype to /usr/local/
+
+sudo mkdir -p /usr/local/include
+sudo ln -s /usr/X11/include/freetype2/freetype /usr/local/include/freetype
+sudo ln -s /usr/X11/include/ft2build.h /usr/local/include/ft2build.h
+sudo ln -s /usr/X11/include/png.h /usr/local/include/png.h
+sudo ln -s /usr/X11/include/pngconf.h /usr/local/include/pngconf.h
+sudo ln -s /usr/X11/include/pnglibconf.h /usr/local/include/pnglibconf.h
+sudo mkdir -p /usr/local/lib
+sudo ln -s /usr/X11/lib/libfreetype.dylib /usr/local/lib/libfreetype.dylib
+sudo ln -s /usr/X11/lib/libpng.dylib /usr/local/lib/libpng.dylib
+
+Then `sudo pip install matplotlib`
+
+
+
