@@ -8,7 +8,8 @@
 
 # install R
 # add CRAN to source list
-sudo echo "deb http://http://cran.cnr.Berkeley.edu/bin/linux/ubuntu precise/" >> /etc/apt/sources.list
+# sudo chmod 777 /etc/apt/sources.list
+# sudo echo "deb http://http://cran.cnr.Berkeley.edu/bin/linux/ubuntu precise/" >> /etc/apt/sources.list
 sudo apt-get -y upgrade
 # Add marutter's R repositories
 sudo add-apt-repository -y ppa:marutter/rdev
@@ -19,21 +20,21 @@ sudo apt-get -y install libatlas-base-dev
 sudo apt-get -y install libatlas3gf-sse2
 
 # If you are going to build R from source add these
- sudo apt-get -y install gfortran
- sudo apt-get -y install g++
- sudo apt-get -y install xorg-dev
- sudo apt-get -y install libreadline-dev
- sudo apt-get -y install make
- sudo apt-get -y install openjdk-6-jdk
- sudo apt-get -y install tcl
- sudo apt-get -y install tk
- sudo apt-get -y install gdebi-core
- sudo apt-get -y install libapparmor1
- sudo apt-get -y install psmisc
- sudo apt-get -y install sqlite3
+# sudo apt-get -y install gfortran
+# sudo apt-get -y install g++
+# sudo apt-get -y install xorg-dev
+# sudo apt-get -y install libreadline-dev
+# sudo apt-get -y install make
+# sudo apt-get -y install openjdk-6-jdk
+# sudo apt-get -y install tcl
+# sudo apt-get -y install tk
+# sudo apt-get -y install gdebi-core
+# sudo apt-get -y install libapparmor1
+# sudo apt-get -y install psmisc
+# sudo apt-get -y install sqlite3
 
 # Install R 
-sudo apt-get -y r-base r-base-dev
+sudo apt-get -y install r-base r-base-dev
 
 # Install R packages
 R CMD javareconf -e
