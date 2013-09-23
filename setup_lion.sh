@@ -31,7 +31,7 @@ brew install octave
 
 setenv("GNUTERM","X11") >> OCTAVE_HOME/share/octave/site/m/startup/octaverc
 
-# install random
+# install random/other
 brew install gdal
 brew install tmux
 brew install git
