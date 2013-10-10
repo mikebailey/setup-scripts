@@ -3,40 +3,44 @@
 # Multi-threaded OPENBlas
 # R v3.0.1 + libraries
 # RSTUDIO-SERVER v0.97.551
-# OCTAVE
-# PYTHON
+# OCTAVE v3.2.4
+# Anaconda PYTHON 2.7.5, 3.3 in virtualenvs includes
+# an obscene amount of scientific libraries
 
-# install R
-# add CRAN to source list
-# sudo chmod 777 /etc/apt/sources.list
-# sudo echo "deb http://http://cran.cnr.Berkeley.edu/bin/linux/ubuntu precise/" >> /etc/apt/sources.list
-# Add marutter's R repositories
+# Install preliminaries
+# add marutters R respositories
 sudo add-apt-repository -y ppa:marutter/rdev
 sudo add-apt-repository -y ppa:marutter/c2d4u
-sudo apt-get -y upgrade
 sudo apt-get -y update
-sudo apt-get -y install libopenblas-base libatlas3gf-base
+sudo apt-get -y upgrade
+sudo apt-get -y install libopenblas-base mlocate r-base r-base-dev python-dev python-pip python-virtualenv
+sudo updatedb
 
-# Note: If you are going to build R from source you may need some of these
-# sudo apt-get -y install gfortran g++ xorg-dev libreadline-dev make tcl tk psmic sqlite3
+# dotfiles
+git clone https://github.com/mikebailey/dotfiles.git
+bash dotfiles/makesymlinks.sh
 
-# Install R 
-sudo apt-get -y install r-base r-base-dev
+# Install Python and virtualenv
+sudo mkdir ~/.virtualenvs
+sudo pip install virtualenvwrapper
+sudo /bin/zsh ~/.zshrc
+sudo chmod 777 -R ~/.virtualenvs/
+
+# install anaconda distribution
+wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.7.0-Linux-x86_64.sh
+bash Anaconda-1.7.0-Linux-x86_64.sh -b
+
+# install a conda 2.7 and 3.3 env
+conda create -n py27 python=2.7 anaconda
+conda create -n py33 python=3.3 anaconda
 
 # Install R packages
-sudo chmod 777 -R /usr/local/lib/R
+sudo chmod 777 -R /usr/local/lib
 sudo chmod 777 -R /usr/lib/R
+sudo chmod 777 -R /usr/local/bin
+
 sudo echo 'options(repos = c(CRAN="http://cran.cnr.Berkeley.edu"))' >> /usr/lib/R/library/base/R/Rprofile
-
-# Not all of these packages have been ported to 3
-# sudo apt-get -y install r-cran-plyr r-cran-forecast r-cran-ggplot2 r-cran-doBy r-cran-foreach r-cran-gridExtra r-cran-lattice r-cran-markdown r-cran-nlme r-cran-randomForest r-cran-RColorBrewer r-cran-Rcpp r-cran-RcppArmadillo r-cran-reshape r-cran-reshape2 r-cran-rJava r-cran-Rserve r-cran-RSQLite r-cran-sandwich r-cran-scales r-cran-snow r-cran-sqldf r-cran-zoo r-cran-tseries r-cran-xts r-cran-knitr
-
-# Install from CRAN instead
 sudo R -e 'install.packages(c("plyr", "forecast", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr"))'
-
-# For RJDBC, need java support
-# R CMD javareconf -e
-# sudo apt-get -y install openjdk-6-jdk
 
 # Install R-STUDIO
 sudo apt-get -y install gdebi-core libapparmor1
@@ -57,22 +61,3 @@ sudo /usr/sbin/rstudio-server restart
 
 # Install Octave
 sudo apt-get install -y octave
-
-# Install dotfiles
-git clone https://github.com/mikebailey/dotfiles.git
-cd ~/dotfiles
-bash ./makesymlinks.sh
-cd ~
-
-# Install Python
-sudo apt-get install -y python-pip python-virtualenv
-sudo mkdir ~/.virtualenvs
-sudo pip install virtualenvwrapper
-sudo /bin/zsh ~/.zshrc
-sudo chmod 777 -R ~/.virtualenvs/
-
-mkvirtualenv data2
-
-# Nice things to have
-sudo apt-get install -y mlocate
-sudo updatedb
