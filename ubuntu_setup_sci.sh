@@ -13,8 +13,9 @@ sudo add-apt-repository -y ppa:marutter/rdev
 sudo add-apt-repository -y ppa:marutter/c2d4u
 sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo apt-get -y install libopenblas-base mlocate r-base r-base-dev python-dev python-pip python-virtualenv
+sudo apt-get -y install libopenblas-base libopenblas-dev mlocate r-base r-base-dev python-dev python-pip python-virtualenv
 sudo updatedb
+sudo ln -s /usr/lib/liblapack.so.3 /usr/lib/liblapack.so
 
 # dotfiles
 git clone https://github.com/mikebailey/dotfiles.git
@@ -31,16 +32,21 @@ wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcd
 bash Anaconda-1.7.0-Linux-x86_64.sh -b
 
 # install a conda 2.7 and 3.3 env
-conda create -n py27 python=2.7 anaconda
-conda create -n py33 python=3.3 anaconda
+anaconda/bin/conda create -n py27 python=2.7 anaconda
+anaconda/bin/conda create -n py33 python=3.3 anaconda
 
 # Install R packages
 sudo chmod 777 -R /usr/local/lib
+sudo chmod 777 -R /usr/local/lib/R
 sudo chmod 777 -R /usr/lib/R
 sudo chmod 777 -R /usr/local/bin
 
 sudo echo 'options(repos = c(CRAN="http://cran.cnr.Berkeley.edu"))' >> /usr/lib/R/library/base/R/Rprofile
-sudo R -e 'install.packages(c("plyr", "forecast", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr"))'
+sudo R -e 'install.packages(c("plyr", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr", "forecast"))'
+
+# CRAN version doesn't compile
+wget http://cran.r-project.org/src/contrib/forecast_4.8.tar.gz
+R CMD INSTALL forecast_4.8.tar.gz
 
 # Install R-STUDIO
 sudo apt-get -y install gdebi-core libapparmor1
