@@ -8,14 +8,12 @@
 # an obscene amount of scientific libraries
 
 # Install preliminaries
-# add marutters R respositories
-sudo add-apt-repository -y ppa:marutter/rdev
-sudo add-apt-repository -y ppa:marutter/c2d4u
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y install libopenblas-base libopenblas-dev mlocate r-base r-base-dev python-dev python-pip python-virtualenv
+sudo echo 'deb http://cran.cnr.berkeley.edu/bin/linux/ubuntu/ precise/' >> /etc/apt/sources.list
+gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+gpg -a --export E084DAB9 | sudo apt-key add -
+sudo apt-get -y update && sudo apt-get -y upgrade
+sudo apt-get -y install libopenblas-base libopenblas-dev mlocate r-base r-base-dev python-dev python-pip python-virtualenv gdebi-core libapparmor1
 sudo updatedb
-sudo ln -s /usr/lib/liblapack.so.3 /usr/lib/liblapack.so
 
 # dotfiles
 git clone https://github.com/mikebailey/dotfiles.git
@@ -36,31 +34,21 @@ anaconda/bin/conda create -n py27 python=2.7 anaconda
 anaconda/bin/conda create -n py33 python=3.3 anaconda
 
 # Install R packages
-sudo chmod 777 -R /usr/local/lib
-sudo chmod 777 -R /usr/local/lib/R
-sudo chmod 777 -R /usr/lib/R
-sudo chmod 777 -R /usr/local/bin
-
 sudo echo 'options(repos = c(CRAN="http://cran.cnr.Berkeley.edu"))' >> /usr/lib/R/library/base/R/Rprofile
-sudo R -e 'install.packages(c("plyr", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr", "forecast"))'
-
-# CRAN version doesn't compile
-wget http://cran.r-project.org/src/contrib/forecast_4.8.tar.gz
-R CMD INSTALL forecast_4.8.tar.gz
+sudo R -e 'install.packages(c("plyr", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr", "forecast", "sqldf", "lubridate", "mlr", "e1071", "arules", "arulesViz", "arulesClassify", "arulesNBMiner", "arulesSequences", "class", "rpart", "ada",
+"SuppDists"))'
 
 # Install R-STUDIO
-sudo apt-get -y install gdebi-core libapparmor1
 wget http://download2.rstudio.org/rstudio-server-0.97.551-amd64.deb
 sudo gdebi -n rstudio-server-0.97.551-amd64.deb
 
 # Create user rstudio and add to group rstudio_users; only allow users from this group to login
 sudo addgroup rstudio_users
-sudo useradd -d /home/ubuntu/rstudio_test2 -s /bin/false -p `openssl passwd rstudio` rstudio
+sudo useradd -m -s /bin/bash -p `openssl passwd rstudio` rstudio
 sudo adduser rstudio rstudio_users
 
-sudo mkdir -p /etc/rstudio/rserver
-sudo chmod 777 -R /etc/rstudio/rserver
-echo "auth-required-user-group=rstudio_users" >> /etc/rstudio/rserver/conf
+echo "auth-required-user-group=rstudio_users" >> /etc/rstudio/rserver.conf
+echo "r-cran-repos=http://cran.cnr.berkeley.edu/" >> /etc/rstudio/rsession.conf
 
 sudo /usr/sbin/rstudio-server verify-installation
 sudo /usr/sbin/rstudio-server restart
