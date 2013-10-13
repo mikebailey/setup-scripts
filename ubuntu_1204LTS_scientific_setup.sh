@@ -57,4 +57,4 @@ sudo /usr/sbin/rstudio-server restart
 # Install Octave
 sudo apt-get install -y octave
 
-sudo /bin/zsh ~/.zshrc
+exit
