@@ -1,10 +1,10 @@
 # This script will setup a scientific computing environment for
 # Ubuntu Server 12.04.2 LTS (precise pangolin). This includes
 # Multi-threaded OPENBlas
-# R v3.0.1 + libraries
+# R v3 (or most recent CRAN version) + some ML/stats libraries
 # RSTUDIO-SERVER v0.97.551
-# OCTAVE v3.2.4
-# Anaconda PYTHON 2.7.5, 3.3 in virtualenvs includes
+# OCTAVE (most recent dist version)
+# PYTHON 2.7.5, 3.3 in virtualenvs includes
 # an obscene amount of scientific libraries
 
 # Install preliminaries
@@ -23,7 +23,6 @@ bash dotfiles/makesymlinks.sh
 # Install Python and virtualenv
 sudo mkdir ~/.virtualenvs
 sudo pip install virtualenvwrapper
-sudo /bin/zsh ~/.zshrc
 sudo chmod 777 -R ~/.virtualenvs/
 
 # install anaconda distribution
@@ -57,4 +56,4 @@ sudo /usr/sbin/rstudio-server restart
 # Install Octave
 sudo apt-get install -y octave
 
-bin/zsh .zshrc
+sudo /bin/zsh ~/.zshrc
