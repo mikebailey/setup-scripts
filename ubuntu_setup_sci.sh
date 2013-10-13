@@ -8,6 +8,7 @@
 # an obscene amount of scientific libraries
 
 # Install preliminaries
+sudo chmod 666 /etc/apt/sources.list
 sudo echo 'deb http://cran.cnr.berkeley.edu/bin/linux/ubuntu/ precise/' >> /etc/apt/sources.list
 gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
 gpg -a --export E084DAB9 | sudo apt-key add -
@@ -30,8 +31,8 @@ wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcd
 bash Anaconda-1.7.0-Linux-x86_64.sh -b
 
 # install a conda 2.7 and 3.3 env
-anaconda/bin/conda create -n py27 python=2.7 anaconda
-anaconda/bin/conda create -n py33 python=3.3 anaconda
+anaconda/bin/conda create -n py27 python=2.7 anaconda --yes
+anaconda/bin/conda create -n py33 python=3.3 anaconda --yes
 
 # Install R packages
 sudo echo 'options(repos = c(CRAN="http://cran.cnr.Berkeley.edu"))' >> /usr/lib/R/library/base/R/Rprofile
@@ -55,3 +56,5 @@ sudo /usr/sbin/rstudio-server restart
 
 # Install Octave
 sudo apt-get install -y octave
+
+bin/zsh .zshrc
