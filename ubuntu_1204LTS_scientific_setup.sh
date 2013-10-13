@@ -15,6 +15,7 @@ gpg -a --export E084DAB9 | sudo apt-key add -
 sudo apt-get -y update && sudo apt-get -y upgrade
 sudo apt-get -y install libopenblas-base libopenblas-dev mlocate r-base r-base-dev python-dev python-pip python-virtualenv gdebi-core libapparmor1
 sudo updatedb
+sudo update-alternatives --set liblapack.so.3gf  /usr/lib/lapack/liblapack.so.3gf
 
 # dotfiles
 git clone https://github.com/mikebailey/dotfiles.git
@@ -33,10 +34,10 @@ bash Anaconda-1.7.0-Linux-x86_64.sh -b
 anaconda/bin/conda create -n py27 python=2.7 anaconda --yes
 anaconda/bin/conda create -n py33 python=3.3 anaconda --yes
 
+sudo chmod 777 -R /usr/lib/R
 # Install R packages
 sudo echo 'options(repos = c(CRAN="http://cran.cnr.Berkeley.edu"))' >> /usr/lib/R/library/base/R/Rprofile
-sudo R -e 'install.packages(c("plyr", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr", "forecast", "sqldf", "lubridate", "mlr", "e1071", "arules", "arulesViz", "arulesClassify", "arulesNBMiner", "arulesSequences", "class", "rpart", "ada",
-"SuppDists"))'
+sudo R -e 'install.packages(c("plyr", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr", "forecast", "sqldf", "lubridate", "mlr", "e1071", "arules", "arulesViz", "arulesClassify", "arulesNBMiner", "arulesSequences", "class", "rpart", "ada", "SuppDists"), dependencies=TRUE)'
 
 # Install R-STUDIO
 wget http://download2.rstudio.org/rstudio-server-0.97.551-amd64.deb
