@@ -36,6 +36,7 @@ anaconda/bin/conda create -n py33 python=3.3 anaconda --yes
 
 sudo chmod 777 -R /usr/lib/R
 sudo chmod 777 -R /usr/local/lib/R
+sudo R CMD javareconf
 # Install R packages
 sudo echo 'options(repos = c(CRAN="http://cran.cnr.Berkeley.edu"))' >> /usr/lib/R/library/base/R/Rprofile
 sudo R -e 'install.packages(c("plyr", "ggplot2", "doBy", "foreach", "forecast", "gridExtra", "lattice", "markdown", "nlme", "randomForest", "RColorBrewer", "Rcpp", "RcppArmadillo", "reshape", "reshape2", "rjson", "Rserve", "RSQLite", "sandwich", "scales", "snow", "sqldf", "zoo", "stringr", "tseries", "xts", "knitr", "forecast", "sqldf", "lubridate", "mlr", "e1071", "arules", "arulesViz", "arulesClassify", "arulesNBMiner", "arulesSequences", "class", "rpart", "ada", "SuppDists"), dependencies=TRUE)'
@@ -58,5 +59,5 @@ sudo /usr/sbin/rstudio-server restart
 # Install Octave
 sudo apt-get install -y octave
 
-chsh -s $(which zsh)
+sudo chsh -s $(which zsh) $(id -un)
 sudo reboot
